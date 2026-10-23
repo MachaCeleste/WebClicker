@@ -1,0 +1,17 @@
+:root {
+    --bg: #0d0221;
+    --icon: #ff0055;
+    --primary: #ff0055;
+    --primary-dark: #bc003f;
+    --secondary: #00ff9f;
+    --secondary-dark: #00b370;
+    --panel-bg: #0d0221;
+    --header-bg: #240b36;
+    --item-bg: #240b36;
+    --counter: #00ff9f;
+    --text: #ffffff;
+    --text-muted: #7aebd3;
+    --border: #ff0055;
+    --button-text: #0d0221;
+    --closer: #ff0055;
+}

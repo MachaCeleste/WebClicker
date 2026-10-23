@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebClicker</title>
+    <link rel="icon" type="image/svg" href="/favicon.svg">
+    <link rel="stylesheet" href="/styles.css">
+    <link id="theme-link" rel="stylesheet" href="/themes/theme-default.css">
+</head>
+<body>
+    <div id="navBar">
+        <button id="leaderboardBtn" class="nav-btn">
+            <svg viewBox="0 0 24 24" class="icon" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10 20H14V4H10V20ZM4 20H8V10H4V20ZM16 20H20V13H16V20Z"/>
+            </svg>
+        </button>
+        <button id="upgradeBtn" class="nav-btn">
+            <svg viewBox="0 0 24 24" class="icon" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11 21V13H7L13 3V11H17L11 21Z"/>
+            </svg>
+        </button>
+        <button id="themeBtn" class="nav-btn" style="display: none;">
+            <svg viewBox="0 0 24 24" class="icon" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2C6.49 2 2 6.49 2 12C2 17.51 6.49 22 12 22C13.38 22 14.5 20.88 14.5 19.5C14.5 18.82 14.23 18.21 13.79 17.76C13.35 17.31 13.07 16.69 13.07 16C13.07 14.62 14.19 13.5 15.57 13.5H17C19.76 13.5 22 11.26 22 8.5C22 4.91 17.52 2 12 2ZM6.5 12C5.67 12 5 11.33 5 10.5C5 9.67 5.67 9 6.5 9C7.33 9 8 9.67 8 10.5C8 11.33 7.33 12 6.5 12ZM9.5 8C8.67 8 8 7.33 8 6.5C8 5.67 8.67 5 9.5 5C10.33 5 11 5.67 11 6.5C11 7.33 10.33 8 9.5 8ZM14.5 8C13.67 8 13 7.33 13 6.5C13 5.67 13.67 5 14.5 5C15.33 5 16 5.67 16 6.5C16 7.33 15.33 8 14.5 8ZM17.5 12C16.67 12 16 11.33 16 10.5C16 9.67 16.67 9 17.5 9C18.33 9 19 9.67 19 10.5C19 11.33 18.33 12 17.5 12Z"/>
+            </svg>
+        </button>
+        <button id="chatBtn" class="nav-btn">
+            <svg viewBox="0 0 24 24" class="icon" xmlns="http://www.w3.org/2000/svg">
+                <path d="M20 2H4C2.9 2 2 2.9 2 4V22L6 18H20C21.1 18 22 17.1 22 16V4C22 2.9 21.1 2 20 2Z"/>
+            </svg>
+        </button>
+    </div>
+
+    <div id="leaderboardPanel" class="side-panel">
+        <div class="panel-header">
+            <span>Leaderboard</span>
+            <button class="panel-close" onclick="closeAllPanels()">&times;</button>
+        </div>
+        <div id="leaderboardText" style="margin-right: 5px;">Waiting for update...</div>
+    </div>
+
+    <div id="gameContainer">
+        <div id="counterDisplay">0</div>
+        <button id="clickBtn">Click</button>
+    </div>
+    <div id="upgradePanel" class="side-panel">
+        <div class="panel-header">
+            <span>Shop</span>
+            <button class="panel-close" onclick="closeAllPanels()">&times;</button>
+        </div>
+        <div id="upgradeList" style="margin: 5px;">
+            <div class="upgrade-item" id="nicknameUpgradeUI" style="display: none;">
+                <div id="nicknameStaticUI" class="item-header">
+                    <span class="item-name">Nickname</span>
+                    <button class="item-buy-btn" onclick="showNickInput()">Buy</button>
+                </div>
+                <div class="item-footer">
+                    <span class="item-cost">Cost: 100</span>
+                </div>
+            </div>
+            <div class="upgrade-item" id="nicknameInputUI" style="display: none;">
+                <input type="text" id="nickInput" placeholder="Enter Nickname" maxlength="16" style="flex-grow: 1;">
+                <div class="item-footer">
+                    <button class="item-buy-btn" onclick="finalizeNickPurcase()">Submit</button>
+                    <button class="item-buy-btn" onclick="cancelNickPurchase()">Cancel</button>
+                </div>
+            </div>
+
+            <div class="upgrade-item" data-upgrade-type="2" style="display: none;"> 
+                <div class="item-header">
+                    <div>
+                        <span class="item-name">Click Multiplier</span>
+                        <span class="item-level"></span>
+                    </div>
+                    <label class="switch toggle-container">
+                        <input type="checkbox" class="item-toggle">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="item-footer">
+                    <span class="item-cost"></span>
+                    <button class="item-buy-btn">Buy</button>
+                </div>
+            </div>
+
+            <div class="upgrade-item" data-upgrade-type="3" style="display: none;"> 
+                <div class="item-header">
+                    <div>
+                        <span class="item-name">Unlock Theme</span>
+                        <span class="item-level"></span>
+                    </div>
+                    <label class="switch toggle-container">
+                        <input type="checkbox" class="item-toggle">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="item-footer">
+                    <span class="item-cost"></span>
+                    <button class="item-buy-btn">Buy</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="themePanel" class="side-panel">
+        <div class="panel-header">
+            <span>Themes</span>
+            <button class="panel-close" onclick="closeAllPanels()">&times;</button>
+        </div>
+        <div id="themeList" style="margin: 5px;">
+            <div class="theme-item" data-theme-number="0"> 
+                <div class="item-header">
+                    <div>
+                        <span class="item-name">Default</span>
+                    </div>
+                    <label class="switch toggle-container">
+                        <input type="checkbox" class="item-toggle">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="chatPanel" class="side-panel">
+        <div class="panel-header">
+            <span>Chat</span>
+            <button class="panel-close" onclick="closeAllPanels()">&times;</button>
+        </div>
+        <div id="messageList">
+            <div class="chat-item" style="display: none;">
+                <div class="item-header">
+                    <span class="item-name">Username</span>
+                    <span class="item-cost">yyyy/MM/dd - HH:mm:ss</span>
+                </div>
+                <div class="item-footer">
+                    <span class="message-content">Message Content</span>
+                </div>
+            </div>
+        </div>
+        <div style="width: 100%; display: flex;">
+            <textarea id="chatInput" rows="3" placeholder="Message" style="width: 100%; margin: 2px;"></textarea>
+            <button id="chatSubmitBtn" class="item-buy-btn" style="margin: 2px; font-weight: bold;" onclick="sendChatMessage()">Send</button>
+        </div>
+    </div>
+
+    <script type="module" src="./js/main.js?v=0.1.5"></script>
+</body>
+</html>
